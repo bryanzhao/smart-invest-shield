@@ -234,7 +234,7 @@ function RiskIntelligenceApp() {
   const [issueOpen, setIssueOpen] = useState(false);
   const [issueSent, setIssueSent] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
-  const [entityType, setEntityType] = useState(entityTypeNav[0]!.id);
+  const [entityType, setEntityType] = useState<string | undefined>();
 
   const pageTitle = useMemo(() => {
     const current = navItems.find((item) => item.id === activeTab);
@@ -275,7 +275,11 @@ function RiskIntelligenceApp() {
                   <div key={item.id}>
                   <button
                     className={`nav-item ${activeTab === item.id ? "nav-item-active" : ""}`}
-                    onClick={() => { setActiveTab(item.id); setMobileNavOpen(false); }}
+                    onClick={() => {
+                      setActiveTab(item.id);
+                      if (item.id !== "entities") setEntityType(undefined);
+                      setMobileNavOpen(false);
+                    }}
                   >
                     <Icon size={17} strokeWidth={1.8} />
                     <span>{item.label}</span>
@@ -288,8 +292,8 @@ function RiskIntelligenceApp() {
                         return (
                           <button
                             key={sub.id}
-                            className={`nav-subitem ${entityType === sub.id ? "nav-subitem-active" : ""}`}
-                            onClick={() => { setEntityType(sub.id); setMobileNavOpen(false); }}
+                            className={`nav-subitem ${activeTab === "entities" && entityType === sub.id ? "nav-subitem-active" : ""}`}
+                            onClick={() => { setEntityType(sub.id); setActiveTab("entities"); setMobileNavOpen(false); }}
                           >
                             <SubIcon size={14} strokeWidth={1.8} />
                             <span>{sub.name}</span>
