@@ -175,6 +175,8 @@ const navGroups: Array<{
       { id: "framework", label: "分析框架", icon: Layers3 },
       { id: "casebook", label: "风险案例库", icon: BookMarked, badge: "8" },
       { id: "intel", label: "情报补给", icon: Radio, badge: "5" },
+      { id: "entry", label: "进入策略", icon: Route, badge: "4" },
+
     ],
   },
   {
