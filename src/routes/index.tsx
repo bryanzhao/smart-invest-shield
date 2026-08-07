@@ -29,6 +29,7 @@ import {
   UsersRound,
   X,
 } from "lucide-react";
+import { ActorNetworkGraph, CompetitorMatrix, RiskTransmissionFlow } from "@/components/relationship-graphs";
 
 export const Route = createFileRoute("/")({
   head: () => ({
