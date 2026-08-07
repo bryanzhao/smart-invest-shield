@@ -240,7 +240,7 @@ button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-
   .breadcrumb span, .breadcrumb svg { display: none; }.breadcrumb strong { font-size: 10px; }.topbar-actions > .avatar { display: none; }
   .context-selects { width: 100%; justify-content: space-between; }.project-select { margin-left: auto; }
   .verdict-main { align-items: flex-start; gap: 14px; }.verdict-copy h2 { font-size: 14px; }.verdict-footer { flex-wrap: wrap; }.verdict-footer .text-button { width: 100%; justify-content: flex-start; }
-  .pulse-list { grid-template-columns: 1fr; }.pulse-item:nth-child(odd) { border-right: 0; padding-right: 0; }.pulse-item:nth-child(even) { padding-left: 0; }
+  .pulse-list { grid-template-columns: 1fr; }
   .source-row { min-height: 58px; }.source-header { min-height: 32px; }.source-header span:first-child { grid-column: 1 / -1; }.source-header span:not(:first-child) { display: none; }.source-row > span:nth-child(4) { grid-column: 3; }.source-row > .row-arrow { grid-column: 4; }
   .form-grid { grid-template-columns: 1fr; gap: 0; }
 }
