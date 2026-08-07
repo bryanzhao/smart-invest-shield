@@ -36,7 +36,7 @@ import {
 import { CasebookView } from "@/components/casebook";
 import { ExecBriefView } from "@/components/exec-brief";
 import { MarketEntryView } from "@/components/market-entry";
-import { EntityProfilesView } from "@/components/entity-profiles";
+import { EntityProfilesView, entityTypeNav } from "@/components/entity-profiles";
 import { RiskLensView } from "@/components/risk-lens";
 import { IntelSupplyView } from "@/components/intel-supply";
 import { ActorNetworkGraph, CompetitorMatrix, RiskTransmissionFlow } from "@/components/relationship-graphs";
@@ -234,6 +234,7 @@ function RiskIntelligenceApp() {
   const [issueOpen, setIssueOpen] = useState(false);
   const [issueSent, setIssueSent] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
+  const [entityType, setEntityType] = useState(entityTypeNav[0]!.id);
 
   const pageTitle = useMemo(() => {
     const current = navItems.find((item) => item.id === activeTab);
@@ -271,8 +272,8 @@ function RiskIntelligenceApp() {
               {group.items.map((item) => {
                 const Icon = item.icon;
                 return (
+                  <div key={item.id}>
                   <button
-                    key={item.id}
                     className={`nav-item ${activeTab === item.id ? "nav-item-active" : ""}`}
                     onClick={() => { setActiveTab(item.id); setMobileNavOpen(false); }}
                   >
@@ -280,6 +281,24 @@ function RiskIntelligenceApp() {
                     <span>{item.label}</span>
                     {item.badge ? <span className="nav-badge">{item.badge}</span> : null}
                   </button>
+                  {item.id === "entities" && activeTab === "entities" ? (
+                    <div className="nav-subnav">
+                      {entityTypeNav.map((sub) => {
+                        const SubIcon = sub.icon;
+                        return (
+                          <button
+                            key={sub.id}
+                            className={`nav-subitem ${entityType === sub.id ? "nav-subitem-active" : ""}`}
+                            onClick={() => { setEntityType(sub.id); setMobileNavOpen(false); }}
+                          >
+                            <SubIcon size={14} strokeWidth={1.8} />
+                            <span>{sub.name}</span>
+                          </button>
+                        );
+                      })}
+                    </div>
+                  ) : null}
+                  </div>
                 );
               })}
             </div>
@@ -351,7 +370,7 @@ function RiskIntelligenceApp() {
           {activeTab === "brief" ? <ExecBriefView /> : null}
           {activeTab === "overview" ? <Overview onOpenIssue={() => setIssueOpen(true)} /> : null}
           {activeTab === "baseline" ? <BaselineView /> : null}
-          {activeTab === "entities" ? <EntityProfilesView /> : null}
+          {activeTab === "entities" ? <EntityProfilesView typeId={entityType} onTypeChange={setEntityType} /> : null}
           {activeTab === "lens" ? <RiskLensView /> : null}
           {activeTab === "framework" ? <FrameworkView /> : null}
           {activeTab === "casebook" ? <CasebookView /> : null}

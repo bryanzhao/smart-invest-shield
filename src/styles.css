@@ -775,3 +775,11 @@ button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-
   .brief-action { grid-template-columns: minmax(0, 1fr); gap: 8px; }
   .brief-path-steps { grid-template-columns: minmax(0, 1fr); }
 }
+
+/* 侧边栏二级菜单 */
+.nav-subnav { display: flex; flex-direction: column; gap: 2px; margin: 2px 0 6px 22px; padding-left: 10px; border-left: 1px solid oklch(1 0 0 / 0.1); }
+.nav-subitem { display: flex; align-items: center; gap: 8px; width: 100%; text-align: left; border: 0; cursor: pointer; background: transparent; color: oklch(0.65 0.02 255); font-size: 11.5px; line-height: 1.3; min-height: 30px; padding: 0 9px; border-radius: 4px; transition: background .18s, color .18s; }
+.nav-subitem:hover { background: oklch(1 0 0 / 0.055); color: var(--text-inverse); }
+.nav-subitem-active { background: oklch(0.73 0.13 72 / 0.12); color: var(--text-inverse); }
+.nav-subitem-active svg { color: var(--amber); }
+.nav-subitem svg { flex: none; }

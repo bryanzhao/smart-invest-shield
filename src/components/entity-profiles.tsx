@@ -151,8 +151,12 @@ const relationTypes = [
   { type: "触发审查", path: "企业收购 → Golden Power", note: "交易结构直接决定审查暴露度" },
 ];
 
-export function EntityProfilesView() {
-  const [active, setActive] = useState(entityTypes[0]!.id);
+export const entityTypeNav = entityTypes.map((item) => ({ id: item.id, name: item.name, icon: item.icon }));
+
+export function EntityProfilesView({ typeId, onTypeChange }: { typeId?: string; onTypeChange?: (id: string) => void } = {}) {
+  const [internal, setInternal] = useState(entityTypes[0]!.id);
+  const active = typeId ?? internal;
+  const setActive = (id: string) => { setInternal(id); onTypeChange?.(id); };
   const current = entityTypes.find((item) => item.id === active) ?? entityTypes[0]!;
   const filled = current.attrs.filter((attr) => !attr.missing);
   const gaps = current.attrs.filter((attr) => attr.missing);
