@@ -192,7 +192,7 @@ const transmission = {
   ],
 };
 
-const rowY = (index: number) => 36 + index * 24;
+const rowY = (index: number) => 13.5 + index * 36.5;
 
 export function RiskTransmissionFlow() {
   const [active, setActive] = useState<string | null>(null);
@@ -228,37 +228,41 @@ export function RiskTransmissionFlow() {
         <span className="graph-meta">悬停任一节点，高亮其向下传导的完整路径</span>
       </div>
       <div className="flow-canvas">
-        <svg viewBox="0 0 100 100" preserveAspectRatio="none" className="flow-svg" role="img" aria-label="风险传导链路图">
-          {transmission.links.map((link) => {
-            const a = positions[link.from]!;
-            const b = positions[link.to]!;
-            const dim = active !== null && !(chain.has(link.from) && chain.has(link.to));
-            return (
-              <path
-                key={`${link.from}-${link.to}`}
-                className={`flow-link flow-link-${link.strength} ${dim ? "graph-dim" : ""}`}
-                d={`M ${a.x + 14} ${a.y} C ${a.x + 24} ${a.y}, ${b.x - 24} ${b.y}, ${b.x - 14} ${b.y}`}
-              />
-            );
-          })}
-        </svg>
-        <div className="flow-columns">
-          {columns.map((column) => (
-            <div className="flow-column" key={column.title}>
-              <div className="flow-column-title">{column.title}</div>
-              {column.items.map((item) => (
-                <button
-                  key={item.id}
-                  className={`flow-node flow-node-${column.tone} ${active && !chain.has(item.id) ? "graph-dim" : ""} ${active === item.id ? "flow-node-active" : ""}`}
-                  onMouseEnter={() => setActive(item.id)}
-                  onMouseLeave={() => setActive(null)}
-                >
-                  <strong>{item.label}</strong>
-                  <small>{item.meta}</small>
-                </button>
-              ))}
-            </div>
-          ))}
+        <div className="flow-titles">
+          {columns.map((column) => <div className="flow-column-title" key={column.title}>{column.title}</div>)}
+        </div>
+        <div className="flow-body">
+          <svg viewBox="0 0 100 100" preserveAspectRatio="none" className="flow-svg" role="img" aria-label="风险传导链路图">
+            {transmission.links.map((link) => {
+              const a = positions[link.from]!;
+              const b = positions[link.to]!;
+              const dim = active !== null && !(chain.has(link.from) && chain.has(link.to));
+              return (
+                <path
+                  key={`${link.from}-${link.to}`}
+                  className={`flow-link flow-link-${link.strength} ${dim ? "graph-dim" : ""}`}
+                  d={`M ${a.x + 14} ${a.y} C ${a.x + 24} ${a.y}, ${b.x - 24} ${b.y}, ${b.x - 14} ${b.y}`}
+                />
+              );
+            })}
+          </svg>
+          <div className="flow-columns">
+            {columns.map((column) => (
+              <div className="flow-column" key={column.title}>
+                {column.items.map((item) => (
+                  <button
+                    key={item.id}
+                    className={`flow-node flow-node-${column.tone} ${active && !chain.has(item.id) ? "graph-dim" : ""} ${active === item.id ? "flow-node-active" : ""}`}
+                    onMouseEnter={() => setActive(item.id)}
+                    onMouseLeave={() => setActive(null)}
+                  >
+                    <strong>{item.label}</strong>
+                    <small>{item.meta}</small>
+                  </button>
+                ))}
+              </div>
+            ))}
+          </div>
         </div>
       </div>
       <div className="graph-legend">
