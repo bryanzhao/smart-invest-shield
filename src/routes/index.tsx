@@ -323,7 +323,7 @@ function RiskIntelligenceApp() {
             <div>
               <div className="eyebrow">
                 <span className="eyebrow-line" />
-                <span className={`layer-chip layer-${pageIntros[activeTab].layer === "基本认知" ? "fact" : pageIntros[activeTab].layer === "分析框架" ? "method" : "judgement"}`}>{pageIntros[activeTab].layer}</span>
+                <span className={`layer-chip layer-${factLayers.has(pageIntros[activeTab].layer) ? "fact" : methodLayers.has(pageIntros[activeTab].layer) ? "method" : "judgement"}`}>{pageIntros[activeTab].layer}</span>
                 {pageTitle} <span className="demo-tag">试点空间</span>
               </div>
               <h1>{country.name} · {project.name}</h1>
