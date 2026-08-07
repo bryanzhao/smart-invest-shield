@@ -254,8 +254,8 @@ function RiskIntelligenceApp() {
 
           <section className="context-bar" aria-label="视图筛选">
             <div className="context-selects">
-              <label className="select-wrap"><Globe2 size={15} /><select value={country.code} onChange={(event) => setCountry(countries.find((item) => item.code === event.target.value) ?? countries[0])}>{countries.map((item) => <option key={item.code} value={item.code}>{item.name}</option>)}</select><ChevronDown size={14} /></label>
-              <label className="select-wrap project-select"><Layers3 size={15} /><select value={project.name} onChange={(event) => setProject(projects.find((item) => item.name === event.target.value) ?? projects[0])}>{projects.map((item) => <option key={item.name} value={item.name}>{item.name}</option>)}</select><ChevronDown size={14} /></label>
+              <label className="select-wrap"><Globe2 size={15} /><select value={country.code} onChange={(event) => { const nextCountry = countries.find((item) => item.code === event.target.value); if (nextCountry) setCountry(nextCountry); }}>{countries.map((item) => <option key={item.code} value={item.code}>{item.name}</option>)}</select><ChevronDown size={14} /></label>
+              <label className="select-wrap project-select"><Layers3 size={15} /><select value={project.name} onChange={(event) => { const nextProject = projects.find((item) => item.name === event.target.value); if (nextProject) setProject(nextProject); }}>{projects.map((item) => <option key={item.name} value={item.name}>{item.name}</option>)}</select><ChevronDown size={14} /></label>
             </div>
             <div className="context-meta"><span className="live-dot" />持续跟踪中 <span className="meta-divider" /> 数据窗口：近 90 天 <button className="icon-button tiny-button" aria-label="调整筛选"><SlidersHorizontal size={15} /></button></div>
           </section>
