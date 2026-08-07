@@ -153,8 +153,8 @@ const navItems = [
 
 function RiskIntelligenceApp() {
   const [activeTab, setActiveTab] = useState<Tab>("overview");
-  const [country, setCountry] = useState(countries[0]);
-  const [project, setProject] = useState(projects[0]);
+  const [country, setCountry] = useState(countries[0] ?? countries[1]);
+  const [project, setProject] = useState(projects[0] ?? projects[1]);
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
   const [issueOpen, setIssueOpen] = useState(false);
   const [issueSent, setIssueSent] = useState(false);
