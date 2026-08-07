@@ -183,8 +183,8 @@ export function CasebookView() {
       <div className="view-intro">
         <div>
           <span className="section-kicker">案例参照 / RISK CASEBOOK</span>
-          <h2>分门别类的风险案例库</h2>
-          <p>用别人已经踩过的坑校准我们的假设：按主体来源、地域和行业检索可比案例与其真实结果。</p>
+          <h2>风险案例库</h2>
+          <p>依据已发生案例校准判断：按主体来源、地域与行业检索可比案例及其最终处置结果。</p>
         </div>
         <button className="secondary-button"><Filter size={15} /> 导出可比案例</button>
       </div>

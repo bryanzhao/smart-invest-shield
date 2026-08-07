@@ -126,7 +126,7 @@ export function RiskLensView() {
         <div>
           <span className="section-kicker">风险透镜 / SEVEN LENSES</span>
           <h2>七个风险分析维度</h2>
-          <p>每个维度都写明：用哪些实体画像作输入、怎么推、结论是什么、如果错了会看到什么、以及止损前的预警信号。</p>
+          <p>各维度均标注：输入的实体画像、推演路径、结论、反证信号，以及止损前的预警阈值。</p>
         </div>
         <div className="tier-legend">
           <span className="tier tier-1">输入＝实体画像</span>

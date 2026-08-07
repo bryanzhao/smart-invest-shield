@@ -82,7 +82,7 @@ const entityTypes: EntityType[] = [
     name: "人物画像（七段式）",
     icon: UserRound,
     scope: "监管负责人 / 企业 CEO / 关键议员 / 协会核心",
-    ask: "头衔相同，决策自由度可能天差地别。",
+    ask: "职务相同，实际决策自由度可能差异显著。",
     sample: "A2A CEO · Renato Mazzoncini",
     count: 17,
     fill: 54,

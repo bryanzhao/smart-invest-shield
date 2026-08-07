@@ -33,7 +33,7 @@ const channels: Channel[] = [
   {
     id: "c3",
     name: "人力情报 HUMINT",
-    role: "定点：意图、时间表、谁能拍板、真实底线",
+    role: "定点获取：意图、时间表、决策权归属与真实底线",
     strength: "唯一能回答「他们打算怎么做」的渠道",
     limit: "样本极小、带立场偏差、必须交叉验证、合规与成本约束强",
     coverage: 22,
@@ -80,7 +80,7 @@ const intakes: Intake[] = [
     id: "lead",
     icon: Lightbulb,
     title: "分析师线索 / 灵感",
-    desc: "一两句尚未验证的假设，不需要证据，只需要方向。",
+    desc: "尚未验证的假设或方向性判断，无需附带证据。",
     example: "「我怀疑这家公司的实控人换了，但查不到。」",
     handling: "转为待验证命题 → 派生检索路径 → 无法闭合时升级为采购需求",
   },
@@ -237,7 +237,7 @@ export function IntelSupplyView() {
 
           <div className="intake-form">
             <label>
-              <span>情报内容（可以只有一句话）</span>
+              <span>情报内容（可仅填写一句线索）</span>
               <textarea
                 rows={3}
                 value={text}
