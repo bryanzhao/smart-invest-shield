@@ -7,6 +7,7 @@ import {
   Bell,
   BookMarked,
   BookOpen,
+  Boxes,
   Building2,
   ChevronDown,
   ChevronRight,
