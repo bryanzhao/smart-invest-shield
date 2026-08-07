@@ -269,3 +269,68 @@ button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { scroll-behavior: auto !important; transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
 }
+
+/* ---- nav grouping ---- */
+.nav-group { display: flex; flex-direction: column; gap: 2px; margin-bottom: 14px; }
+.nav-group-head { display: flex; flex-direction: column; padding: 0 12px 6px; }
+.nav-group-label { font-size: 11px; font-weight: 600; letter-spacing: .12em; color: var(--muted-foreground); }
+.nav-group-hint { font-size: 10.5px; color: color-mix(in oklab, var(--muted-foreground) 70%, transparent); }
+
+/* ---- layer chips ---- */
+.layer-chip { font-size: 11px; padding: 2px 8px; border-radius: 999px; border: 1px solid transparent; letter-spacing: .04em; }
+.layer-fact { color: var(--chart-2, oklch(.72 .1 220)); border-color: color-mix(in oklab, var(--chart-2, oklch(.72 .1 220)) 40%, transparent); background: color-mix(in oklab, var(--chart-2, oklch(.72 .1 220)) 12%, transparent); }
+.layer-method { color: oklch(.78 .11 175); border-color: color-mix(in oklab, oklch(.78 .11 175) 40%, transparent); background: color-mix(in oklab, oklch(.78 .11 175) 12%, transparent); }
+.layer-judgement { color: oklch(.8 .13 75); border-color: color-mix(in oklab, oklch(.8 .13 75) 40%, transparent); background: color-mix(in oklab, oklch(.8 .13 75) 12%, transparent); }
+
+/* ---- baseline facts ---- */
+.coverage-bar { display: flex; align-items: center; gap: 18px; flex-wrap: wrap; padding: 16px 20px; border: 1px solid var(--border); border-radius: 14px; background: var(--card); margin-bottom: 22px; }
+.coverage-copy { display: flex; flex-direction: column; gap: 3px; min-width: 200px; }
+.coverage-copy span { font-size: 12.5px; color: var(--muted-foreground); }
+.coverage-track { flex: 1; min-width: 160px; height: 6px; border-radius: 999px; background: color-mix(in oklab, var(--foreground) 10%, transparent); overflow: hidden; }
+.coverage-track span { display: block; height: 100%; border-radius: 999px; background: oklch(.78 .11 175); }
+.coverage-note { font-size: 12px; color: var(--muted-foreground); }
+.fact-block { margin-bottom: 26px; }
+.fact-block-head { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 12px; }
+.fact-block-head h3 { font-size: 15px; }
+.fact-block-head span { font-size: 12px; color: var(--muted-foreground); }
+.fact-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px; }
+.fact-card { display: flex; flex-direction: column; gap: 6px; padding: 16px 18px; border: 1px solid var(--border); border-radius: 14px; background: var(--card); transition: transform .18s ease, box-shadow .18s ease; }
+.fact-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-hover, 0 10px 24px -14px rgb(0 0 0 / .5)); }
+.fact-label { font-size: 12.5px; color: var(--muted-foreground); }
+.fact-value { font-size: 22px; letter-spacing: -.01em; }
+.fact-note { font-size: 12.5px; color: var(--muted-foreground); line-height: 1.6; }
+.fact-footer { display: flex; align-items: center; justify-content: space-between; margin-top: 6px; padding-top: 10px; border-top: 1px solid var(--border); font-size: 12px; color: var(--muted-foreground); }
+
+/* ---- framework ---- */
+.layer-flow { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 14px; margin-bottom: 30px; }
+.layer-card { position: relative; padding: 18px; border: 1px solid var(--border); border-radius: 16px; background: var(--card); display: flex; flex-direction: column; gap: 10px; }
+.layer-card::before { content: ""; position: absolute; inset: 0 auto 0 0; width: 3px; border-radius: 16px 0 0 16px; background: var(--muted-foreground); }
+.layer-card-fact::before { background: oklch(.72 .1 220); }
+.layer-card-structure::before { background: oklch(.78 .11 175); }
+.layer-card-judgement::before { background: oklch(.8 .13 75); }
+.layer-card-action::before { background: oklch(.72 .14 20); }
+.layer-card-top { display: flex; align-items: center; gap: 10px; }
+.layer-step { font-family: var(--font-mono, monospace); font-size: 12px; color: var(--muted-foreground); }
+.layer-question { font-size: 14px; font-weight: 500; }
+.layer-meta { display: flex; flex-direction: column; gap: 2px; }
+.layer-meta span { font-size: 11px; letter-spacing: .1em; color: var(--muted-foreground); }
+.layer-meta p { font-size: 12.5px; color: color-mix(in oklab, var(--foreground) 82%, transparent); line-height: 1.6; }
+.matrix-legend { font-size: 12px; color: var(--muted-foreground); }
+.matrix-table { border: 1px solid var(--border); border-radius: 14px; overflow: hidden; background: var(--card); margin-bottom: 22px; }
+.matrix-row { display: grid; grid-template-columns: 1.1fr 2fr .6fr 1fr .8fr; gap: 12px; align-items: center; padding: 14px 18px; border-bottom: 1px solid var(--border); font-size: 13px; }
+.matrix-row:last-child { border-bottom: none; }
+.matrix-head { font-size: 11.5px; letter-spacing: .1em; color: var(--muted-foreground); background: color-mix(in oklab, var(--foreground) 4%, transparent); }
+.matrix-name { font-weight: 600; }
+.matrix-question { color: var(--muted-foreground); }
+.matrix-coverage { display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--muted-foreground); }
+.matrix-coverage i { display: block; height: 5px; border-radius: 999px; background: oklch(.78 .11 175); min-width: 4px; max-width: 80px; }
+.matrix-state { justify-self: start; font-size: 11.5px; padding: 3px 9px; border-radius: 999px; border: 1px solid var(--border); }
+.state-gap { color: oklch(.75 .14 40); border-color: color-mix(in oklab, oklch(.75 .14 40) 40%, transparent); }
+.boundary-note { display: flex; gap: 12px; align-items: flex-start; padding: 16px 18px; border: 1px dashed var(--border); border-radius: 14px; color: var(--muted-foreground); }
+.boundary-note div { display: flex; flex-direction: column; gap: 3px; }
+.boundary-note strong { color: var(--foreground); font-size: 13.5px; }
+.boundary-note span { font-size: 12.5px; line-height: 1.6; }
+@media (max-width: 780px) {
+  .matrix-row { grid-template-columns: 1fr 1fr; gap: 8px; }
+  .matrix-head { display: none; }
+}
