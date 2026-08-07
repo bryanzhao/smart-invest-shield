@@ -31,6 +31,8 @@ import {
   X,
 } from "lucide-react";
 import { CasebookView } from "@/components/casebook";
+import { EntityProfilesView } from "@/components/entity-profiles";
+import { RiskLensView } from "@/components/risk-lens";
 import { ActorNetworkGraph, CompetitorMatrix, RiskTransmissionFlow } from "@/components/relationship-graphs";
 
 export const Route = createFileRoute("/")({
