@@ -777,13 +777,9 @@ button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-
 }
 
 /* 侧边栏二级菜单 */
-.nav-subnav { display: grid; gap: 2px; margin: 2px 0 6px 26px; padding-left: 10px; border-left: 1px solid var(--border); }
-.nav-subitem {
-  display: flex; align-items: center; gap: 8px; width: 100%; text-align: left;
-  padding: 6px 9px; border: 0; border-radius: 8px; cursor: pointer;
-  background: transparent; color: var(--muted-foreground); font-size: 0.78rem; line-height: 1.3;
-  transition: background 0.15s ease, color 0.15s ease;
-}
-.nav-subitem:hover { background: color-mix(in oklab, var(--muted) 60%, transparent); color: var(--foreground); }
-.nav-subitem-active { background: color-mix(in oklab, var(--primary) 16%, transparent); color: var(--primary); font-weight: 550; }
+.nav-subnav { display: flex; flex-direction: column; gap: 2px; margin: 2px 0 6px 22px; padding-left: 10px; border-left: 1px solid oklch(1 0 0 / 0.1); }
+.nav-subitem { display: flex; align-items: center; gap: 8px; width: 100%; text-align: left; border: 0; cursor: pointer; background: transparent; color: oklch(0.65 0.02 255); font-size: 11.5px; line-height: 1.3; min-height: 30px; padding: 0 9px; border-radius: 4px; transition: background .18s, color .18s; }
+.nav-subitem:hover { background: oklch(1 0 0 / 0.055); color: var(--text-inverse); }
+.nav-subitem-active { background: oklch(0.73 0.13 72 / 0.12); color: var(--text-inverse); }
+.nav-subitem-active svg { color: var(--amber); }
 .nav-subitem svg { flex: none; }
