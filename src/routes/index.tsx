@@ -5,6 +5,7 @@ import {
   AlertTriangle,
   ArrowUpRight,
   Bell,
+  BookMarked,
   BookOpen,
   Building2,
   ChevronDown,
@@ -29,6 +30,7 @@ import {
   UsersRound,
   X,
 } from "lucide-react";
+import { CasebookView } from "@/components/casebook";
 import { ActorNetworkGraph, CompetitorMatrix, RiskTransmissionFlow } from "@/components/relationship-graphs";
 
 export const Route = createFileRoute("/")({
@@ -51,7 +53,7 @@ export const Route = createFileRoute("/")({
   component: RiskIntelligenceApp,
 });
 
-type Tab = "overview" | "baseline" | "policy" | "actors" | "framework" | "risk" | "issues";
+type Tab = "overview" | "baseline" | "policy" | "actors" | "framework" | "casebook" | "risk" | "issues";
 type RiskLevel = "high" | "medium" | "low";
 
 const countries = [
@@ -162,7 +164,10 @@ const navGroups: Array<{
   {
     group: "分析框架",
     hint: "从事实到判断的推演",
-    items: [{ id: "framework", label: "分析框架", icon: Layers3 }],
+    items: [
+      { id: "framework", label: "分析框架", icon: Layers3 },
+      { id: "casebook", label: "风险案例库", icon: BookMarked, badge: "8" },
+    ],
   },
   {
     group: "风险与决策",
@@ -182,6 +187,7 @@ const pageIntros: Record<Tab, { layer: string; description: string }> = {
   policy: { layer: "基本认知", description: "制度安排、审批流程与政策原文，先描述规则本身，再谈影响。" },
   actors: { layer: "基本认知", description: "监管机构、竞品公司与关键人物的档案与公开动作。" },
   framework: { layer: "分析框架", description: "事实 → 结构 → 判断 → 行动：每一层的输入、方法与产出都可追溯。" },
+  casebook: { layer: "分析框架", description: "同类国家、同类行业、同类主体的历史风险案例，用可比经验校准判断。" },
   risk: { layer: "风险与决策", description: "只有经过框架推演并绑定证据的结论，才会进入风险清单。" },
   issues: { layer: "风险与决策", description: "把决策层的新问题转成可追踪、可复核、可沉淀的研究交付。" },
 };
@@ -311,6 +317,7 @@ function RiskIntelligenceApp() {
           {activeTab === "overview" ? <Overview onOpenIssue={() => setIssueOpen(true)} /> : null}
           {activeTab === "baseline" ? <BaselineView /> : null}
           {activeTab === "framework" ? <FrameworkView /> : null}
+          {activeTab === "casebook" ? <CasebookView /> : null}
           {activeTab === "risk" ? <RiskView onOpenIssue={() => setIssueOpen(true)} /> : null}
           {activeTab === "policy" ? <PolicyView /> : null}
           {activeTab === "actors" ? <ActorsView /> : null}
