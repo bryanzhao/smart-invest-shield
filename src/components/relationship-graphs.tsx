@@ -192,15 +192,15 @@ const transmission = {
   ],
 };
 
-const rowY = (index: number) => 60 + index * 108;
+const rowY = (index: number) => 36 + index * 24;
 
 export function RiskTransmissionFlow() {
   const [active, setActive] = useState<string | null>(null);
 
   const positions: Record<string, { x: number; y: number }> = {};
-  transmission.sources.forEach((item, index) => { positions[item.id] = { x: 176, y: rowY(index) }; });
-  transmission.channels.forEach((item, index) => { positions[item.id] = { x: 400, y: rowY(index) }; });
-  transmission.impacts.forEach((item, index) => { positions[item.id] = { x: 624, y: rowY(index) }; });
+  transmission.sources.forEach((item, index) => { positions[item.id] = { x: 16.5, y: rowY(index) }; });
+  transmission.channels.forEach((item, index) => { positions[item.id] = { x: 50, y: rowY(index) }; });
+  transmission.impacts.forEach((item, index) => { positions[item.id] = { x: 83.5, y: rowY(index) }; });
 
   const chain = new Set<string>();
   if (active) {
@@ -228,7 +228,7 @@ export function RiskTransmissionFlow() {
         <span className="graph-meta">悬停任一节点，高亮其向下传导的完整路径</span>
       </div>
       <div className="flow-canvas">
-        <svg viewBox="0 0 800 400" className="flow-svg" role="img" aria-label="风险传导链路图">
+        <svg viewBox="0 0 100 100" preserveAspectRatio="none" className="flow-svg" role="img" aria-label="风险传导链路图">
           {transmission.links.map((link) => {
             const a = positions[link.from]!;
             const b = positions[link.to]!;
@@ -237,7 +237,7 @@ export function RiskTransmissionFlow() {
               <path
                 key={`${link.from}-${link.to}`}
                 className={`flow-link flow-link-${link.strength} ${dim ? "graph-dim" : ""}`}
-                d={`M ${a.x + 82} ${a.y} C ${a.x + 150} ${a.y}, ${b.x - 150} ${b.y}, ${b.x - 82} ${b.y}`}
+                d={`M ${a.x + 14} ${a.y} C ${a.x + 24} ${a.y}, ${b.x - 24} ${b.y}, ${b.x - 14} ${b.y}`}
               />
             );
           })}
