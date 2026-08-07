@@ -308,6 +308,8 @@ function RiskIntelligenceApp() {
           </section>
 
           {activeTab === "overview" ? <Overview onOpenIssue={() => setIssueOpen(true)} /> : null}
+          {activeTab === "baseline" ? <BaselineView /> : null}
+          {activeTab === "framework" ? <FrameworkView /> : null}
           {activeTab === "risk" ? <RiskView onOpenIssue={() => setIssueOpen(true)} /> : null}
           {activeTab === "policy" ? <PolicyView /> : null}
           {activeTab === "actors" ? <ActorsView /> : null}
