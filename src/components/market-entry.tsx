@@ -140,13 +140,13 @@ export function MarketEntryView() {
       <div className="view-intro">
         <div>
           <span className="section-kicker">进入策略 / MARKET ENTRY</span>
-          <h2>从认知到落子：门票、层级、家底与进入模式</h2>
+          <h2>从认知到行动：准入条件、决策层级、自有资源与进入模式</h2>
           <p>风险判断之外，还需要回答“以什么顺序、什么模式、什么边界进入”。这一层把前面的事实重组为可执行的博弈结构。</p>
         </div>
       </div>
 
       <div className="entry-block">
-        <div className="panel-topline"><span><Ticket size={14} /> 进入门票自查清单</span><span className="node-count">5 类</span></div>
+        <div className="panel-topline"><span><Ticket size={14} /> 准入条件自查清单</span><span className="node-count">5 类</span></div>
         <div className="ticket-grid">
           {tickets.map((item) => (
             <article className={`ticket-card ticket-${ticketTone[item.status]}`} key={item.id}>
@@ -187,7 +187,7 @@ export function MarketEntryView() {
 
       <div className="entry-split">
         <div className="entry-block">
-          <div className="panel-topline"><span><Boxes size={14} /> 家底盘点：自身组织边界</span></div>
+          <div className="panel-topline"><span><Boxes size={14} /> 自有资源盘点：组织能力边界</span></div>
           <div className="asset-columns">
             {assets.map((column) => (
               <div className={`asset-column asset-${column.tone}`} key={column.label}>

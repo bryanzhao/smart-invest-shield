@@ -210,7 +210,7 @@ const factLayers = new Set(["工作台", "事实底座", "情报供给"]);
 const methodLayers = new Set(["分析推演"]);
 
 const pageIntros: Record<Tab, { layer: string; description: string }> = {
-  brief: { layer: "工作台", description: "给决策层的 3 分钟版：市场概况是什么、风险提示是什么、下一步要干什么。" },
+  brief: { layer: "工作台", description: "面向决策层的核心结论摘要：市场概况、风险提示与下一步。" },
   overview: { layer: "工作台", description: "从政策、监管、竞争和关键人物中，建立国家层面的结构化认知。" },
   baseline: { layer: "事实底座", description: "市场规模、需求结构、成本与基础设施等基础事实，不含风险评价。" },
   policy: { layer: "事实底座", description: "制度安排、审批流程与政策原文，先描述规则本身，再谈影响。" },
@@ -221,8 +221,8 @@ const pageIntros: Record<Tab, { layer: string; description: string }> = {
   framework: { layer: "分析推演", description: "事实 → 结构 → 判断 → 行动：每一层的输入、方法与产出都可追溯。" },
   lens: { layer: "分析推演", description: "七个风险维度的分析链：输入画像、推演路径、反证信号与预警阈值。" },
   risk: { layer: "决策与行动", description: "只有经过框架推演并绑定证据的结论，才会进入风险清单。" },
-  entry: { layer: "决策与行动", description: "进入门票、三级决策链、自身家底与进入模式矩阵：把认知收敛为可执行的落子顺序。" },
-  issues: { layer: "决策与行动", description: "把决策层的新问题转成可追踪、可复核、可沉淀的研究交付。" },
+  entry: { layer: "决策与行动", description: "准入条件、三级决策链、自身资源盘点与进入模式矩阵，将认知收敛为可执行的行动序列。" },
+  issues: { layer: "决策与行动", description: "将决策层提出的问题转化为可追踪、可复核、可沉淀的研究交付。" },
 };
 
 
@@ -470,7 +470,7 @@ function BaselineView() {
         <div>
           <span className="section-kicker">基本认知 / MARKET BASELINE</span>
           <h2>市场基本盘</h2>
-          <p>这一层只回答“事实是什么”：口径、数值、来源与更新时间，不做好坏评价，也不推导结论。</p>
+          <p>本层仅呈现事实本身：统计口径、数值、来源与更新时间，不作价值评价，也不推导结论。</p>
         </div>
         <button className="secondary-button"><FileSearch size={15} /> 查看口径说明</button>
       </div>
