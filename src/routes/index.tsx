@@ -55,7 +55,7 @@ export const Route = createFileRoute("/")({
   component: RiskIntelligenceApp,
 });
 
-type Tab = "overview" | "baseline" | "policy" | "actors" | "framework" | "casebook" | "risk" | "issues";
+type Tab = "overview" | "baseline" | "policy" | "actors" | "entities" | "framework" | "casebook" | "lens" | "risk" | "issues";
 type RiskLevel = "high" | "medium" | "low";
 
 const countries = [
