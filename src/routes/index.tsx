@@ -158,10 +158,16 @@ const navGroups: Array<{
   items: Array<{ id: Tab; label: string; icon: typeof Map; badge?: string }>;
 }> = [
   {
-    group: "基本认知",
-    hint: "事实层 · 不做价值判断",
+    group: "工作台",
+    hint: "当前项目的总体态势",
     items: [
       { id: "overview", label: "国家认知地图", icon: Map },
+    ],
+  },
+  {
+    group: "事实底座",
+    hint: "事实层 · 可溯源、不做判断",
+    items: [
       { id: "baseline", label: "市场基本盘", icon: BookOpen },
       { id: "policy", label: "制度与流程", icon: FileSearch },
       { id: "actors", label: "主体档案", icon: Network },
@@ -169,22 +175,27 @@ const navGroups: Array<{
     ],
   },
   {
-    group: "分析框架",
-    hint: "从事实到判断的推演",
+    group: "情报供给",
+    hint: "输入层 · 补齐认知缺口",
     items: [
-      { id: "framework", label: "分析框架", icon: Layers3 },
-      { id: "casebook", label: "风险案例库", icon: BookMarked, badge: "8" },
       { id: "intel", label: "情报补给", icon: Radio, badge: "5" },
-      { id: "entry", label: "进入策略", icon: Compass, badge: "4" },
-
+      { id: "casebook", label: "风险案例库", icon: BookMarked, badge: "8" },
     ],
   },
   {
-    group: "风险与决策",
+    group: "分析推演",
+    hint: "方法层 · 从事实到判断",
+    items: [
+      { id: "framework", label: "分析框架", icon: Layers3 },
+      { id: "lens", label: "七维风险透镜", icon: Telescope, badge: "7" },
+    ],
+  },
+  {
+    group: "决策与行动",
     hint: "判断层 · 需人工复核",
     items: [
-      { id: "lens", label: "七维风险透镜", icon: Telescope, badge: "7" },
       { id: "risk", label: "风险清单", icon: ShieldCheck, badge: "10" },
+      { id: "entry", label: "进入策略", icon: Compass, badge: "4" },
       { id: "issues", label: "Issue 中心", icon: GitPullRequest, badge: "3" },
     ],
   },
@@ -192,20 +203,24 @@ const navGroups: Array<{
 
 const navItems = navGroups.flatMap((group) => group.items);
 
+const factLayers = new Set(["工作台", "事实底座", "情报供给"]);
+const methodLayers = new Set(["分析推演"]);
+
 const pageIntros: Record<Tab, { layer: string; description: string }> = {
-  overview: { layer: "基本认知", description: "从政策、监管、竞争和关键人物中，建立国家层面的结构化认知。" },
-  baseline: { layer: "基本认知", description: "市场规模、需求结构、成本与基础设施等基础事实，不含风险评价。" },
-  policy: { layer: "基本认知", description: "制度安排、审批流程与政策原文，先描述规则本身，再谈影响。" },
-  actors: { layer: "基本认知", description: "监管机构、竞品公司与关键人物的档案与公开动作。" },
-  entities: { layer: "基本认知", description: "六类实体按标准模板画像：属性、来源分级与信息缺口一并呈现。" },
-  framework: { layer: "分析框架", description: "事实 → 结构 → 判断 → 行动：每一层的输入、方法与产出都可追溯。" },
-  casebook: { layer: "分析框架", description: "同类国家、同类行业、同类主体的历史风险案例，用可比经验校准判断。" },
-  intel: { layer: "分析框架", description: "开源情报打底、客户自有情报校准、开源不可闭合的部分转为闭源与人力情报采购需求。" },
-  entry: { layer: "分析框架", description: "进入门票、三级决策链、自身家底与进入模式矩阵：把认知收敛为可执行的落子顺序。" },
-  lens: { layer: "风险与决策", description: "七个风险维度的分析链：输入画像、推演路径、反证信号与预警阈值。" },
-  risk: { layer: "风险与决策", description: "只有经过框架推演并绑定证据的结论，才会进入风险清单。" },
-  issues: { layer: "风险与决策", description: "把决策层的新问题转成可追踪、可复核、可沉淀的研究交付。" },
+  overview: { layer: "工作台", description: "从政策、监管、竞争和关键人物中，建立国家层面的结构化认知。" },
+  baseline: { layer: "事实底座", description: "市场规模、需求结构、成本与基础设施等基础事实，不含风险评价。" },
+  policy: { layer: "事实底座", description: "制度安排、审批流程与政策原文，先描述规则本身，再谈影响。" },
+  actors: { layer: "事实底座", description: "监管机构、竞品公司与关键人物的档案与公开动作。" },
+  entities: { layer: "事实底座", description: "六类实体按标准模板画像：属性、来源分级与信息缺口一并呈现。" },
+  intel: { layer: "情报供给", description: "开源情报打底、客户自有情报校准、开源不可闭合的部分转为闭源与人力情报采购需求。" },
+  casebook: { layer: "情报供给", description: "同类国家、同类行业、同类主体的历史风险案例，用可比经验校准判断。" },
+  framework: { layer: "分析推演", description: "事实 → 结构 → 判断 → 行动：每一层的输入、方法与产出都可追溯。" },
+  lens: { layer: "分析推演", description: "七个风险维度的分析链：输入画像、推演路径、反证信号与预警阈值。" },
+  risk: { layer: "决策与行动", description: "只有经过框架推演并绑定证据的结论，才会进入风险清单。" },
+  entry: { layer: "决策与行动", description: "进入门票、三级决策链、自身家底与进入模式矩阵：把认知收敛为可执行的落子顺序。" },
+  issues: { layer: "决策与行动", description: "把决策层的新问题转成可追踪、可复核、可沉淀的研究交付。" },
 };
+
 
 function RiskIntelligenceApp() {
   const [activeTab, setActiveTab] = useState<Tab>("overview");
