@@ -50,7 +50,7 @@ export const Route = createFileRoute("/")({
   component: RiskIntelligenceApp,
 });
 
-type Tab = "overview" | "risk" | "policy" | "actors" | "issues";
+type Tab = "overview" | "baseline" | "policy" | "actors" | "framework" | "risk" | "issues";
 type RiskLevel = "high" | "medium" | "low";
 
 const countries = [
@@ -143,13 +143,47 @@ const sourceRows = [
   { title: "Italian EV charging market outlook", source: "Mordor Intelligence", date: "2026.07.28", grade: "B" },
 ];
 
-const navItems = [
-  { id: "overview" as Tab, label: "认知地图", icon: Map },
-  { id: "risk" as Tab, label: "风险清单", icon: ShieldCheck, badge: "10" },
-  { id: "policy" as Tab, label: "政策与流程", icon: FileSearch },
-  { id: "actors" as Tab, label: "竞品与人物", icon: Network },
-  { id: "issues" as Tab, label: "Issue 中心", icon: GitPullRequest, badge: "3" },
+const navGroups: Array<{
+  group: string;
+  hint: string;
+  items: Array<{ id: Tab; label: string; icon: typeof Map; badge?: string }>;
+}> = [
+  {
+    group: "基本认知",
+    hint: "事实层 · 不做价值判断",
+    items: [
+      { id: "overview", label: "国家认知地图", icon: Map },
+      { id: "baseline", label: "市场基本盘", icon: BookOpen },
+      { id: "policy", label: "制度与流程", icon: FileSearch },
+      { id: "actors", label: "主体档案", icon: Network },
+    ],
+  },
+  {
+    group: "分析框架",
+    hint: "从事实到判断的推演",
+    items: [{ id: "framework", label: "分析框架", icon: Layers3 }],
+  },
+  {
+    group: "风险与决策",
+    hint: "判断层 · 需人工复核",
+    items: [
+      { id: "risk", label: "风险清单", icon: ShieldCheck, badge: "10" },
+      { id: "issues", label: "Issue 中心", icon: GitPullRequest, badge: "3" },
+    ],
+  },
 ];
+
+const navItems = navGroups.flatMap((group) => group.items);
+
+const pageIntros: Record<Tab, { layer: string; description: string }> = {
+  overview: { layer: "基本认知", description: "从政策、监管、竞争和关键人物中，建立国家层面的结构化认知。" },
+  baseline: { layer: "基本认知", description: "市场规模、需求结构、成本与基础设施等基础事实，不含风险评价。" },
+  policy: { layer: "基本认知", description: "制度安排、审批流程与政策原文，先描述规则本身，再谈影响。" },
+  actors: { layer: "基本认知", description: "监管机构、竞品公司与关键人物的档案与公开动作。" },
+  framework: { layer: "分析框架", description: "事实 → 结构 → 判断 → 行动：每一层的输入、方法与产出都可追溯。" },
+  risk: { layer: "风险与决策", description: "只有经过框架推演并绑定证据的结论，才会进入风险清单。" },
+  issues: { layer: "风险与决策", description: "把决策层的新问题转成可追踪、可复核、可沉淀的研究交付。" },
+};
 
 function RiskIntelligenceApp() {
   const [activeTab, setActiveTab] = useState<Tab>("overview");
@@ -186,23 +220,31 @@ function RiskIntelligenceApp() {
           <button className="icon-button mobile-close" aria-label="关闭导航" onClick={() => setMobileNavOpen(false)}><X size={17} /></button>
         </div>
 
-        <div className="sidebar-section-label">工作台</div>
         <nav className="main-nav" aria-label="主导航">
-          {navItems.map((item) => {
-            const Icon = item.icon;
-            return (
-              <button
-                key={item.id}
-                className={`nav-item ${activeTab === item.id ? "nav-item-active" : ""}`}
-                onClick={() => { setActiveTab(item.id); setMobileNavOpen(false); }}
-              >
-                <Icon size={17} strokeWidth={1.8} />
-                <span>{item.label}</span>
-                {item.badge ? <span className="nav-badge">{item.badge}</span> : null}
-              </button>
-            );
-          })}
+          {navGroups.map((group) => (
+            <div className="nav-group" key={group.group}>
+              <div className="nav-group-head">
+                <span className="nav-group-label">{group.group}</span>
+                <span className="nav-group-hint">{group.hint}</span>
+              </div>
+              {group.items.map((item) => {
+                const Icon = item.icon;
+                return (
+                  <button
+                    key={item.id}
+                    className={`nav-item ${activeTab === item.id ? "nav-item-active" : ""}`}
+                    onClick={() => { setActiveTab(item.id); setMobileNavOpen(false); }}
+                  >
+                    <Icon size={17} strokeWidth={1.8} />
+                    <span>{item.label}</span>
+                    {item.badge ? <span className="nav-badge">{item.badge}</span> : null}
+                  </button>
+                );
+              })}
+            </div>
+          ))}
         </nav>
+
 
         <div className="sidebar-section-label sidebar-section-label-spaced">项目空间</div>
         <div className="space-list">
@@ -242,15 +284,20 @@ function RiskIntelligenceApp() {
         <div className="content-area">
           <div className="page-heading-row">
             <div>
-              <div className="eyebrow"><span className="eyebrow-line" />国家认知地图 <span className="demo-tag">试点空间</span></div>
+              <div className="eyebrow">
+                <span className="eyebrow-line" />
+                <span className={`layer-chip layer-${pageIntros[activeTab].layer === "基本认知" ? "fact" : pageIntros[activeTab].layer === "分析框架" ? "method" : "judgement"}`}>{pageIntros[activeTab].layer}</span>
+                {pageTitle} <span className="demo-tag">试点空间</span>
+              </div>
               <h1>{country.name} · {project.name}</h1>
-              <p className="page-description">从政策、监管、竞争和关键人物变化中，建立可追溯的进入判断。</p>
+              <p className="page-description">{pageIntros[activeTab].description}</p>
             </div>
             <div className="heading-actions">
               <button className="secondary-button"><Clock3 size={15} /> 更新记录</button>
               <button className="primary-button" onClick={() => setIssueOpen(true)}><Plus size={16} /> 提交 Issue</button>
             </div>
           </div>
+
 
           <section className="context-bar" aria-label="视图筛选">
             <div className="context-selects">
@@ -261,6 +308,8 @@ function RiskIntelligenceApp() {
           </section>
 
           {activeTab === "overview" ? <Overview onOpenIssue={() => setIssueOpen(true)} /> : null}
+          {activeTab === "baseline" ? <BaselineView /> : null}
+          {activeTab === "framework" ? <FrameworkView /> : null}
           {activeTab === "risk" ? <RiskView onOpenIssue={() => setIssueOpen(true)} /> : null}
           {activeTab === "policy" ? <PolicyView /> : null}
           {activeTab === "actors" ? <ActorsView /> : null}
@@ -342,4 +391,120 @@ function IssuesView({ onOpenIssue }: { onOpenIssue: () => void }) {
 
 function IssueModal({ sent, onClose, onSubmit }: { sent: boolean; onClose: () => void; onSubmit: (event: React.FormEvent<HTMLFormElement>) => void }) {
   return <div className="modal-backdrop" role="presentation"><div className="issue-modal" role="dialog" aria-modal="true" aria-labelledby="issue-title"><div className="modal-header"><div><span className="section-kicker">NEW ISSUE / 决策支持</span><h2 id="issue-title">提交一个需要回答的问题</h2></div><button className="icon-button" onClick={onClose} aria-label="关闭"><X size={18} /></button></div>{sent ? <div className="sent-state"><div className="sent-icon"><ShieldCheck size={24} /></div><h3>Issue 已进入研究队列</h3><p>我们会在 24–72 小时内完成响应。</p></div> : <form onSubmit={onSubmit}><label className="form-label">问题标题<input required placeholder="例如：外资审查是否影响合资进入路径？" /></label><div className="form-grid"><label className="form-label">关联项目<select defaultValue="意大利充电网络"><option>意大利充电网络</option><option>北部储能布局</option></select></label><label className="form-label">优先级<select defaultValue="高"><option>高</option><option>中</option><option>低</option></select></label></div><label className="form-label">背景与期望结论<textarea required rows={4} placeholder="补充决策背景、已知信息与希望回答的方向" /></label><div className="modal-footer"><span><Clock3 size={14} /> 预计响应 24–72 小时</span><div><button type="button" className="secondary-button" onClick={onClose}>取消</button><button type="submit" className="primary-button"><GitPullRequest size={15} /> 创建 Issue</button></div></div></form>}</div></div>;
+}
+
+const baselineFacts = [
+  { group: "市场与需求", items: [
+    { label: "在册电动车保有量", value: "42.6 万辆", note: "2026Q2 · ACI 登记数据", source: "ACI", grade: "A" },
+    { label: "公共充电点数量", value: "63,800 个", note: "同比 +31%，其中直流占 18%", source: "MOTUS-E", grade: "A" },
+    { label: "车桩比", value: "6.7 : 1", note: "欧盟平均 12.4 : 1", source: "EAFO", grade: "B" },
+  ] },
+  { group: "成本与经济", items: [
+    { label: "工商业电价（中位）", value: "0.211 €/kWh", note: "北部低于南部约 9%", source: "ARERA", grade: "A" },
+    { label: "站点平均建设成本", value: "38–52 k€ / 直流站", note: "含并网与土建，地区差异较大", source: "行业访谈", grade: "C" },
+    { label: "PNRR 补贴强度", value: "最高 40%", note: "按站点类型与区域分档", source: "MASE", grade: "A" },
+  ] },
+  { group: "制度与基础设施", items: [
+    { label: "并网申请主管方", value: "e-distribuzione 等 DSO", note: "按区域划分，流程口径不完全一致", source: "ARERA", grade: "A" },
+    { label: "外资审查制度", value: "Golden Power", note: "适用范围含关键基础设施，口径在演进", source: "Gazzetta Ufficiale", grade: "A" },
+    { label: "地方审批层级", value: "大区 + 市镇双层", note: "20 个大区规则存在差异", source: "公开法规汇编", grade: "B" },
+  ] },
+];
+
+function BaselineView() {
+  return (
+    <section className="view-panel">
+      <div className="view-intro">
+        <div>
+          <span className="section-kicker">基本认知 / MARKET BASELINE</span>
+          <h2>市场基本盘</h2>
+          <p>这一层只回答“事实是什么”：口径、数值、来源与更新时间，不做好坏评价，也不推导结论。</p>
+        </div>
+        <button className="secondary-button"><FileSearch size={15} /> 查看口径说明</button>
+      </div>
+
+      <div className="coverage-bar">
+        <div className="coverage-copy"><strong>认知完备度 72%</strong><span>28 项基础指标中，20 项已绑定 A/B 级来源</span></div>
+        <div className="coverage-track"><span style={{ width: "72%" }} /></div>
+        <span className="coverage-note">缺口集中在建设成本与地方审批时长</span>
+      </div>
+
+      {baselineFacts.map((block) => (
+        <div className="fact-block" key={block.group}>
+          <div className="fact-block-head"><h3>{block.group}</h3><span>{block.items.length} 项事实</span></div>
+          <div className="fact-grid">
+            {block.items.map((fact) => (
+              <article className="fact-card" key={fact.label}>
+                <span className="fact-label">{fact.label}</span>
+                <strong className="fact-value">{fact.value}</strong>
+                <p className="fact-note">{fact.note}</p>
+                <div className="fact-footer"><span>{fact.source}</span><span className={`evidence evidence-${fact.grade.toLowerCase()}`}>{fact.grade}</span></div>
+              </article>
+            ))}
+          </div>
+        </div>
+      ))}
+    </section>
+  );
+}
+
+const frameworkLayers = [
+  { step: "01", name: "事实层", question: "事实是什么？", method: "多语种公开信息采集、口径统一、来源分级", output: "基本盘指标、政策原文、主体档案", tone: "fact" },
+  { step: "02", name: "结构层", question: "它们如何相互作用？", method: "实体关系抽取、流程建模、影响传导映射", output: "认知网络、进入流程、影响链路", tone: "structure" },
+  { step: "03", name: "判断层", question: "对我们意味着什么？", method: "红方视角推演、假设检验、冲突证据处理", output: "风险评分、进入判断、置信度", tone: "judgement" },
+  { step: "04", name: "行动层", question: "接下来做什么？", method: "触发条件设定、责任人分配、复核周期", output: "应对建议、监测指标、Issue 响应", tone: "action" },
+];
+
+const frameworkDimensions = [
+  { name: "政治与制度", question: "规则是否稳定、可预期？", facts: 46, coverage: 84, state: "已成结论" },
+  { name: "市场与需求", question: "需求规模与结构是否支撑投入？", facts: 38, coverage: 78, state: "已成结论" },
+  { name: "竞争与主体", question: "谁掌握入口，我们凭什么进入？", facts: 51, coverage: 69, state: "推演中" },
+  { name: "经济与回报", question: "成本、电价与补贴如何影响模型？", facts: 27, coverage: 55, state: "缺口" },
+  { name: "运营与执行", question: "落地需要哪些本地能力？", facts: 19, coverage: 41, state: "缺口" },
+  { name: "退出与流动性", question: "资产未来由谁接手？", facts: 12, coverage: 33, state: "缺口" },
+];
+
+function FrameworkView() {
+  return (
+    <section className="view-panel">
+      <div className="view-intro">
+        <div>
+          <span className="section-kicker">分析框架 / ANALYSIS FRAMEWORK</span>
+          <h2>从事实到判断的四层推演</h2>
+          <p>每一个风险结论，都必须能沿着这条链路回溯到具体事实与来源；任何跳层的结论都会被标记为假设。</p>
+        </div>
+        <button className="secondary-button"><Layers3 size={15} /> 下载框架说明</button>
+      </div>
+
+      <div className="layer-flow">
+        {frameworkLayers.map((layer) => (
+          <article className={`layer-card layer-card-${layer.tone}`} key={layer.step}>
+            <div className="layer-card-top"><span className="layer-step">{layer.step}</span><strong>{layer.name}</strong></div>
+            <p className="layer-question">{layer.question}</p>
+            <div className="layer-meta"><span>方法</span><p>{layer.method}</p></div>
+            <div className="layer-meta"><span>产出</span><p>{layer.output}</p></div>
+          </article>
+        ))}
+      </div>
+
+      <div className="section-heading"><div><span className="section-kicker">维度矩阵</span><h2>六个分析维度的当前状态</h2></div><span className="matrix-legend">覆盖度 = 已绑定证据的关键问题占比</span></div>
+      <div className="matrix-table">
+        <div className="matrix-row matrix-head"><span>维度</span><span>核心问题</span><span>事实数</span><span>覆盖度</span><span>状态</span></div>
+        {frameworkDimensions.map((dim) => (
+          <div className="matrix-row" key={dim.name}>
+            <span className="matrix-name">{dim.name}</span>
+            <span className="matrix-question">{dim.question}</span>
+            <span className="mono-text">{dim.facts}</span>
+            <span className="matrix-coverage"><i style={{ width: `${dim.coverage}%` }} />{dim.coverage}%</span>
+            <span className={`matrix-state state-${dim.state === "已成结论" ? "done" : dim.state === "推演中" ? "research" : "gap"}`}>{dim.state}</span>
+          </div>
+        ))}
+      </div>
+
+      <div className="boundary-note">
+        <ShieldCheck size={16} />
+        <div><strong>AI 的边界</strong><span>AI 负责采集、抽取、关联与草稿；判断层与行动层的结论必须经过人工复核后才会发布。</span></div>
+      </div>
+    </section>
+  );
 }
