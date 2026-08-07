@@ -15,6 +15,7 @@ import {
   Clock3,
   FileSearch,
   GitPullRequest,
+  Gauge,
   Globe2,
   Layers3,
   Map,
@@ -33,6 +34,7 @@ import {
   Compass,
 } from "lucide-react";
 import { CasebookView } from "@/components/casebook";
+import { ExecBriefView } from "@/components/exec-brief";
 import { MarketEntryView } from "@/components/market-entry";
 import { EntityProfilesView } from "@/components/entity-profiles";
 import { RiskLensView } from "@/components/risk-lens";
@@ -59,7 +61,7 @@ export const Route = createFileRoute("/")({
   component: RiskIntelligenceApp,
 });
 
-type Tab = "overview" | "baseline" | "policy" | "actors" | "entities" | "framework" | "casebook" | "intel" | "entry" | "lens" | "risk" | "issues";
+type Tab = "brief" | "overview" | "baseline" | "policy" | "actors" | "entities" | "framework" | "casebook" | "intel" | "entry" | "lens" | "risk" | "issues";
 type RiskLevel = "high" | "medium" | "low";
 
 const countries = [
@@ -159,8 +161,9 @@ const navGroups: Array<{
 }> = [
   {
     group: "工作台",
-    hint: "当前项目的总体态势",
+    hint: "先看结论，再看依据",
     items: [
+      { id: "brief", label: "决策简报", icon: Gauge },
       { id: "overview", label: "国家认知地图", icon: Map },
     ],
   },
@@ -207,6 +210,7 @@ const factLayers = new Set(["工作台", "事实底座", "情报供给"]);
 const methodLayers = new Set(["分析推演"]);
 
 const pageIntros: Record<Tab, { layer: string; description: string }> = {
+  brief: { layer: "工作台", description: "给决策层的 3 分钟版：市场概况是什么、风险提示是什么、下一步要干什么。" },
   overview: { layer: "工作台", description: "从政策、监管、竞争和关键人物中，建立国家层面的结构化认知。" },
   baseline: { layer: "事实底座", description: "市场规模、需求结构、成本与基础设施等基础事实，不含风险评价。" },
   policy: { layer: "事实底座", description: "制度安排、审批流程与政策原文，先描述规则本身，再谈影响。" },
@@ -223,7 +227,7 @@ const pageIntros: Record<Tab, { layer: string; description: string }> = {
 
 
 function RiskIntelligenceApp() {
-  const [activeTab, setActiveTab] = useState<Tab>("overview");
+  const [activeTab, setActiveTab] = useState<Tab>("brief");
   const [country, setCountry] = useState(() => countries[0] ?? { name: "意大利", code: "IT", status: "重点跟踪", tone: "amber" });
   const [project, setProject] = useState(() => projects[0] ?? { name: "意大利充电网络", type: "充电基础设施", state: "重点项目" });
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
@@ -344,6 +348,7 @@ function RiskIntelligenceApp() {
             <div className="context-meta"><span className="live-dot" />持续跟踪中 <span className="meta-divider" /> 数据窗口：近 90 天 <button className="icon-button tiny-button" aria-label="调整筛选"><SlidersHorizontal size={15} /></button></div>
           </section>
 
+          {activeTab === "brief" ? <ExecBriefView /> : null}
           {activeTab === "overview" ? <Overview onOpenIssue={() => setIssueOpen(true)} /> : null}
           {activeTab === "baseline" ? <BaselineView /> : null}
           {activeTab === "entities" ? <EntityProfilesView /> : null}
