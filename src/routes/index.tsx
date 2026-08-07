@@ -7,6 +7,7 @@ import {
   Bell,
   BookMarked,
   BookOpen,
+  Boxes,
   Building2,
   ChevronDown,
   ChevronRight,
@@ -26,11 +27,14 @@ import {
   SlidersHorizontal,
   Sparkles,
   Target,
+  Telescope,
   UserRound,
   UsersRound,
   X,
 } from "lucide-react";
 import { CasebookView } from "@/components/casebook";
+import { EntityProfilesView } from "@/components/entity-profiles";
+import { RiskLensView } from "@/components/risk-lens";
 import { ActorNetworkGraph, CompetitorMatrix, RiskTransmissionFlow } from "@/components/relationship-graphs";
 
 export const Route = createFileRoute("/")({
@@ -53,7 +57,7 @@ export const Route = createFileRoute("/")({
   component: RiskIntelligenceApp,
 });
 
-type Tab = "overview" | "baseline" | "policy" | "actors" | "framework" | "casebook" | "risk" | "issues";
+type Tab = "overview" | "baseline" | "policy" | "actors" | "entities" | "framework" | "casebook" | "lens" | "risk" | "issues";
 type RiskLevel = "high" | "medium" | "low";
 
 const countries = [
@@ -159,6 +163,7 @@ const navGroups: Array<{
       { id: "baseline", label: "市场基本盘", icon: BookOpen },
       { id: "policy", label: "制度与流程", icon: FileSearch },
       { id: "actors", label: "主体档案", icon: Network },
+      { id: "entities", label: "实体画像", icon: Boxes, badge: "6" },
     ],
   },
   {
@@ -173,6 +178,7 @@ const navGroups: Array<{
     group: "风险与决策",
     hint: "判断层 · 需人工复核",
     items: [
+      { id: "lens", label: "七维风险透镜", icon: Telescope, badge: "7" },
       { id: "risk", label: "风险清单", icon: ShieldCheck, badge: "10" },
       { id: "issues", label: "Issue 中心", icon: GitPullRequest, badge: "3" },
     ],
@@ -186,8 +192,10 @@ const pageIntros: Record<Tab, { layer: string; description: string }> = {
   baseline: { layer: "基本认知", description: "市场规模、需求结构、成本与基础设施等基础事实，不含风险评价。" },
   policy: { layer: "基本认知", description: "制度安排、审批流程与政策原文，先描述规则本身，再谈影响。" },
   actors: { layer: "基本认知", description: "监管机构、竞品公司与关键人物的档案与公开动作。" },
+  entities: { layer: "基本认知", description: "六类实体按标准模板画像：属性、来源分级与信息缺口一并呈现。" },
   framework: { layer: "分析框架", description: "事实 → 结构 → 判断 → 行动：每一层的输入、方法与产出都可追溯。" },
   casebook: { layer: "分析框架", description: "同类国家、同类行业、同类主体的历史风险案例，用可比经验校准判断。" },
+  lens: { layer: "风险与决策", description: "七个风险维度的分析链：输入画像、推演路径、反证信号与预警阈值。" },
   risk: { layer: "风险与决策", description: "只有经过框架推演并绑定证据的结论，才会进入风险清单。" },
   issues: { layer: "风险与决策", description: "把决策层的新问题转成可追踪、可复核、可沉淀的研究交付。" },
 };
@@ -316,6 +324,8 @@ function RiskIntelligenceApp() {
 
           {activeTab === "overview" ? <Overview onOpenIssue={() => setIssueOpen(true)} /> : null}
           {activeTab === "baseline" ? <BaselineView /> : null}
+          {activeTab === "entities" ? <EntityProfilesView /> : null}
+          {activeTab === "lens" ? <RiskLensView /> : null}
           {activeTab === "framework" ? <FrameworkView /> : null}
           {activeTab === "casebook" ? <CasebookView /> : null}
           {activeTab === "risk" ? <RiskView onOpenIssue={() => setIssueOpen(true)} /> : null}
