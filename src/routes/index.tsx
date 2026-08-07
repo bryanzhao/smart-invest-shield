@@ -324,6 +324,8 @@ function RiskIntelligenceApp() {
 
           {activeTab === "overview" ? <Overview onOpenIssue={() => setIssueOpen(true)} /> : null}
           {activeTab === "baseline" ? <BaselineView /> : null}
+          {activeTab === "entities" ? <EntityProfilesView /> : null}
+          {activeTab === "lens" ? <RiskLensView /> : null}
           {activeTab === "framework" ? <FrameworkView /> : null}
           {activeTab === "casebook" ? <CasebookView /> : null}
           {activeTab === "risk" ? <RiskView onOpenIssue={() => setIssueOpen(true)} /> : null}
