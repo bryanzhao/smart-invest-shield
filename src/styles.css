@@ -421,7 +421,7 @@ button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-
 .flow-link { fill: none; stroke: color-mix(in oklab, var(--foreground) 28%, transparent); transition: opacity .2s; vector-effect: non-scaling-stroke; }
 .flow-link-high { stroke-width: 3; stroke: color-mix(in oklab, var(--destructive, oklch(0.6 0.2 25)) 55%, transparent); }
 .flow-link-low { stroke-width: 1.5; stroke-dasharray: 4 4; }
-.flow-columns { position: relative; display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.flow-columns { position: relative; display: grid; grid-template-columns: repeat(3, 1fr); gap: 7.2%; }
 .flow-column { display: flex; flex-direction: column; gap: 26px; }
 .flow-column-title { font-size: 0.74rem; letter-spacing: .1em; color: var(--muted-foreground); text-transform: uppercase; }
 .flow-node {
