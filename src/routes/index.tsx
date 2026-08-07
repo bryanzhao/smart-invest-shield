@@ -27,10 +27,8 @@ import {
   ShieldCheck,
   SlidersHorizontal,
   Sparkles,
-  Target,
   Telescope,
   UserRound,
-  UsersRound,
   X,
   Compass,
 } from "lucide-react";
@@ -364,25 +362,9 @@ function Overview({ onOpenIssue }: { onOpenIssue: () => void }) {
         <div className="metric-panel"><div className="metric-label">活跃风险 <CircleHelp size={14} /></div><div className="metric-value">10<span> 项</span></div><div className="metric-trend trend-warn">3 项需关注 <span>本周</span></div><div className="risk-segments"><i className="segment-high" /><i className="segment-high" /><i className="segment-high" /><i className="segment-medium" /><i className="segment-medium" /><i className="segment-low" /></div></div>
       </section>
 
-      <section className="section-block map-section">
-        <div className="section-heading"><div><span className="section-kicker">01 / 认知网络</span><h2>市场关键节点</h2></div><button className="ghost-button">展开关系图 <ArrowUpRight size={15} /></button></div>
-        <div className="map-layout">
-          <div className="cognitive-map">
-            <div className="map-header"><span className="map-label"><span className="map-grid-icon"><Map size={14} /></span>意大利投资认知网络</span><span className="map-date">节点 24 · 关系 38 · 来源 338</span></div>
-            <div className="map-canvas">
-              <div className="map-grid" />
-              <svg className="map-lines" viewBox="0 0 800 420" preserveAspectRatio="none" aria-hidden="true"><path d="M400 212 L200 124 M400 212 L620 120 M400 212 L210 310 M400 212 L610 312 M200 124 L125 215 M620 120 L700 208" /><path className="line-dashed" d="M200 124 L610 312 M620 120 L210 310" /></svg>
-              <MapNode className="node-center" icon={<Target size={17} />} title="市场进入" meta="核心判断" tone="amber" />
-              <MapNode className="node-regulator" icon={<Building2 size={16} />} title="监管体系" meta="5 个部门" tone="blue" />
-              <MapNode className="node-competitor" icon={<Activity size={16} />} title="竞争格局" meta="12 家公司" tone="teal" />
-              <MapNode className="node-policy" icon={<BookOpen size={16} />} title="政策环境" meta="18 项政策" tone="amber" />
-              <MapNode className="node-people" icon={<UsersRound size={16} />} title="关键人物" meta="31 个节点" tone="purple" />
-              <MapNode className="node-process" icon={<GitPullRequest size={16} />} title="进入流程" meta="7 个节点" tone="red" />
-              <div className="map-legend"><span><i className="legend-dot legend-strong" />已验证</span><span><i className="legend-dot legend-weak" />待验证</span><span><i className="legend-line" />影响关系</span></div>
-            </div>
-          </div>
-          <div className="pulse-panel"><div className="pulse-heading"><div><span className="section-kicker">实时跟踪</span><h3>变化脉冲</h3></div><span className="pulse-count">4 条新变化</span></div><div className="pulse-list">{pulses.map((pulse) => <div className="pulse-item" key={pulse.title}><div className={`pulse-icon pulse-${pulse.color}`}>{pulse.type === "policy" ? <BookOpen size={15} /> : pulse.type === "person" ? <UserRound size={15} /> : pulse.type === "market" ? <Building2 size={15} /> : <AlertTriangle size={15} />}</div><div className="pulse-copy"><div className="pulse-meta"><span>{pulse.tag}</span><time>{pulse.time}</time></div><p>{pulse.title}</p></div></div>)}</div><button className="full-width-button">查看全部变化 <ChevronRight size={15} /></button></div>
-        </div>
+      <section className="section-block pulse-section">
+        <div className="section-heading"><div><span className="section-kicker">01 / 实时跟踪</span><h2>变化脉冲</h2></div><button className="ghost-button">查看全部变化 <ChevronRight size={15} /></button></div>
+        <div className="pulse-panel"><div className="pulse-heading"><div><span className="section-kicker">近 90 天 · 已验证变化</span><h3>市场信息更新</h3></div><span className="pulse-count">4 条新变化</span></div><div className="pulse-list">{pulses.map((pulse) => <div className="pulse-item" key={pulse.title}><div className={`pulse-icon pulse-${pulse.color}`}>{pulse.type === "policy" ? <BookOpen size={15} /> : pulse.type === "person" ? <UserRound size={15} /> : pulse.type === "market" ? <Building2 size={15} /> : <AlertTriangle size={15} />}</div><div className="pulse-copy"><div className="pulse-meta"><span>{pulse.tag}</span><time>{pulse.time}</time></div><p>{pulse.title}</p></div></div>)}</div></div>
       </section>
 
       <section className="section-block risk-section"><div className="section-heading"><div><span className="section-kicker">02 / 风险雷达</span><h2>当前最需要关注的风险</h2></div><button className="ghost-button">查看完整清单 <ArrowUpRight size={15} /></button></div><div className="risk-grid">{risks.slice(0, 3).map((risk) => <RiskCard key={risk.title} risk={risk} />)}</div></section>
@@ -390,10 +372,6 @@ function Overview({ onOpenIssue }: { onOpenIssue: () => void }) {
       <section className="section-block source-section"><div className="section-heading"><div><span className="section-kicker">03 / 证据链</span><h2>最近验证的来源</h2></div><button className="ghost-button">来源库 <ArrowUpRight size={15} /></button></div><div className="source-table"><div className="source-row source-header"><span>来源 / 判断关联</span><span>发布机构</span><span>日期</span><span>证据</span><span /></div>{sourceRows.map((row) => <div className="source-row" key={row.title}><span className="source-title"><span className="source-file"><FileSearch size={14} /></span>{row.title}</span><span>{row.source}</span><span className="mono-text">{row.date}</span><span><strong className={`evidence evidence-${row.grade.toLowerCase()}`}>{row.grade}</strong></span><button className="row-arrow" aria-label={`查看 ${row.title}`}><ArrowUpRight size={15} /></button></div>)}</div></section>
     </>
   );
-}
-
-function MapNode({ className, icon, title, meta, tone }: { className: string; icon: React.ReactNode; title: string; meta: string; tone: string }) {
-  return <button className={`map-node ${className} node-tone-${tone}`}><span className="node-icon">{icon}</span><span className="node-copy"><strong>{title}</strong><small>{meta}</small></span></button>;
 }
 
 function RiskCard({ risk }: { risk: (typeof risks)[number] }) {
