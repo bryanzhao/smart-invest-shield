@@ -50,7 +50,7 @@ export const Route = createFileRoute("/")({
   component: RiskIntelligenceApp,
 });
 
-type Tab = "overview" | "risk" | "policy" | "actors" | "issues";
+type Tab = "overview" | "baseline" | "policy" | "actors" | "framework" | "risk" | "issues";
 type RiskLevel = "high" | "medium" | "low";
 
 const countries = [
@@ -143,13 +143,47 @@ const sourceRows = [
   { title: "Italian EV charging market outlook", source: "Mordor Intelligence", date: "2026.07.28", grade: "B" },
 ];
 
-const navItems = [
-  { id: "overview" as Tab, label: "认知地图", icon: Map },
-  { id: "risk" as Tab, label: "风险清单", icon: ShieldCheck, badge: "10" },
-  { id: "policy" as Tab, label: "政策与流程", icon: FileSearch },
-  { id: "actors" as Tab, label: "竞品与人物", icon: Network },
-  { id: "issues" as Tab, label: "Issue 中心", icon: GitPullRequest, badge: "3" },
+const navGroups: Array<{
+  group: string;
+  hint: string;
+  items: Array<{ id: Tab; label: string; icon: typeof Map; badge?: string }>;
+}> = [
+  {
+    group: "基本认知",
+    hint: "事实层 · 不做价值判断",
+    items: [
+      { id: "overview", label: "国家认知地图", icon: Map },
+      { id: "baseline", label: "市场基本盘", icon: BookOpen },
+      { id: "policy", label: "制度与流程", icon: FileSearch },
+      { id: "actors", label: "主体档案", icon: Network },
+    ],
+  },
+  {
+    group: "分析框架",
+    hint: "从事实到判断的推演",
+    items: [{ id: "framework", label: "分析框架", icon: Layers3 }],
+  },
+  {
+    group: "风险与决策",
+    hint: "判断层 · 需人工复核",
+    items: [
+      { id: "risk", label: "风险清单", icon: ShieldCheck, badge: "10" },
+      { id: "issues", label: "Issue 中心", icon: GitPullRequest, badge: "3" },
+    ],
+  },
 ];
+
+const navItems = navGroups.flatMap((group) => group.items);
+
+const pageIntros: Record<Tab, { layer: string; description: string }> = {
+  overview: { layer: "基本认知", description: "从政策、监管、竞争和关键人物中，建立国家层面的结构化认知。" },
+  baseline: { layer: "基本认知", description: "市场规模、需求结构、成本与基础设施等基础事实，不含风险评价。" },
+  policy: { layer: "基本认知", description: "制度安排、审批流程与政策原文，先描述规则本身，再谈影响。" },
+  actors: { layer: "基本认知", description: "监管机构、竞品公司与关键人物的档案与公开动作。" },
+  framework: { layer: "分析框架", description: "事实 → 结构 → 判断 → 行动：每一层的输入、方法与产出都可追溯。" },
+  risk: { layer: "风险与决策", description: "只有经过框架推演并绑定证据的结论，才会进入风险清单。" },
+  issues: { layer: "风险与决策", description: "把决策层的新问题转成可追踪、可复核、可沉淀的研究交付。" },
+};
 
 function RiskIntelligenceApp() {
   const [activeTab, setActiveTab] = useState<Tab>("overview");
