@@ -22,6 +22,7 @@ import {
   Network,
   Plus,
   Radar,
+  Radio,
   Search,
   ShieldCheck,
   SlidersHorizontal,
