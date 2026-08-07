@@ -284,15 +284,20 @@ function RiskIntelligenceApp() {
         <div className="content-area">
           <div className="page-heading-row">
             <div>
-              <div className="eyebrow"><span className="eyebrow-line" />国家认知地图 <span className="demo-tag">试点空间</span></div>
+              <div className="eyebrow">
+                <span className="eyebrow-line" />
+                <span className={`layer-chip layer-${pageIntros[activeTab].layer === "基本认知" ? "fact" : pageIntros[activeTab].layer === "分析框架" ? "method" : "judgement"}`}>{pageIntros[activeTab].layer}</span>
+                {pageTitle} <span className="demo-tag">试点空间</span>
+              </div>
               <h1>{country.name} · {project.name}</h1>
-              <p className="page-description">从政策、监管、竞争和关键人物变化中，建立可追溯的进入判断。</p>
+              <p className="page-description">{pageIntros[activeTab].description}</p>
             </div>
             <div className="heading-actions">
               <button className="secondary-button"><Clock3 size={15} /> 更新记录</button>
               <button className="primary-button" onClick={() => setIssueOpen(true)}><Plus size={16} /> 提交 Issue</button>
             </div>
           </div>
+
 
           <section className="context-bar" aria-label="视图筛选">
             <div className="context-selects">
