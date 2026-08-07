@@ -334,3 +334,118 @@ button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-
   .matrix-row { grid-template-columns: 1fr 1fr; gap: 8px; }
   .matrix-head { display: none; }
 }
+
+/* ---------- 关系可视化 ---------- */
+.graph-shell {
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  background: var(--card);
+  box-shadow: var(--shadow-panel);
+  overflow: hidden;
+  margin-bottom: 22px;
+}
+.graph-head {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  padding: 14px 18px; border-bottom: 1px solid var(--border);
+}
+.graph-title { display: inline-flex; align-items: center; gap: 8px; font-weight: 600; font-size: 0.92rem; color: var(--foreground); }
+.graph-meta { font-size: 0.76rem; color: var(--muted-foreground); }
+.graph-canvas { position: relative; padding: 8px 6px 0; background:
+  radial-gradient(circle at 30% 20%, color-mix(in oklab, var(--primary) 6%, transparent), transparent 60%); }
+.graph-svg { width: 100%; height: auto; display: block; }
+
+.graph-edge path { fill: none; stroke: color-mix(in oklab, var(--foreground) 26%, transparent); stroke-width: 1.4; transition: opacity .2s, stroke .2s; }
+.graph-edge-weak path { stroke-dasharray: 5 5; stroke: color-mix(in oklab, var(--foreground) 16%, transparent); }
+.graph-edge text { fill: var(--muted-foreground); font-size: 12px; }
+.graph-dim { opacity: 0.14; }
+
+.graph-node { cursor: pointer; }
+.graph-node circle { transition: r .18s ease, opacity .2s; }
+.graph-node-halo { fill: transparent; }
+.graph-node-label { fill: var(--foreground); font-size: 13px; font-weight: 600; }
+.graph-node-sub { fill: var(--muted-foreground); font-size: 11px; }
+.graph-node-regulator circle:first-child { fill: color-mix(in oklab, var(--chart-2, oklch(0.62 0.13 245)) 85%, transparent); }
+.graph-node-person circle:first-child { fill: oklch(0.66 0.15 300); }
+.graph-node-company circle:first-child { fill: oklch(0.68 0.12 185); }
+.graph-node-self circle:first-child { fill: var(--primary); }
+.graph-node-active .graph-node-halo { fill: color-mix(in oklab, var(--primary) 14%, transparent); }
+
+.graph-legend {
+  display: flex; flex-wrap: wrap; gap: 16px; padding: 12px 18px;
+  border-top: 1px solid var(--border); font-size: 0.76rem; color: var(--muted-foreground);
+}
+.graph-legend span { display: inline-flex; align-items: center; gap: 6px; }
+.legend-node { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
+.legend-node-regulator { background: oklch(0.62 0.13 245); }
+.legend-node-person { background: oklch(0.66 0.15 300); }
+.legend-node-company { background: oklch(0.68 0.12 185); }
+.legend-node-self { background: var(--primary); }
+.legend-edge { width: 20px; height: 0; border-top: 1.6px solid color-mix(in oklab, var(--foreground) 40%, transparent); display: inline-block; }
+.legend-edge-weak { border-top-style: dashed; }
+.legend-edge-strong { border-top-width: 3px; }
+
+/* 竞争矩阵 */
+.matrix-plot { position: relative; padding: 26px 24px 44px 52px; }
+.axis-y-label { position: absolute; left: 14px; top: 50%; transform: translateY(-50%) rotate(-90deg); transform-origin: center; white-space: nowrap; font-size: 0.72rem; color: var(--muted-foreground); }
+.axis-x-label { position: absolute; bottom: 14px; left: 50%; transform: translateX(-50%); font-size: 0.72rem; color: var(--muted-foreground); }
+.plot-area { position: relative; height: 380px; border-left: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+.plot-grid { position: absolute; inset: 0; background-image:
+  linear-gradient(to right, color-mix(in oklab, var(--foreground) 7%, transparent) 1px, transparent 1px),
+  linear-gradient(to top, color-mix(in oklab, var(--foreground) 7%, transparent) 1px, transparent 1px);
+  background-size: 25% 25%; }
+.plot-quadrant { position: absolute; font-size: 0.72rem; color: color-mix(in oklab, var(--muted-foreground) 80%, transparent); letter-spacing: .06em; }
+.plot-q1 { right: 12px; top: 10px; }
+.plot-q2 { right: 12px; bottom: 10px; }
+.plot-q3 { left: 12px; bottom: 10px; }
+.plot-q4 { left: 12px; top: 10px; }
+.plot-bubble {
+  position: absolute; transform: translate(-50%, 50%); border-radius: 50%;
+  border: 1px solid color-mix(in oklab, var(--foreground) 22%, transparent);
+  background: color-mix(in oklab, oklch(0.68 0.12 185) 28%, transparent);
+  display: flex; align-items: center; justify-content: center; cursor: pointer;
+  transition: transform .18s ease, background .2s;
+}
+.plot-bubble:hover, .plot-bubble-active { background: color-mix(in oklab, oklch(0.68 0.12 185) 46%, transparent); }
+.plot-bubble-self { background: color-mix(in oklab, var(--primary) 32%, transparent); border-color: var(--primary); }
+.plot-bubble-name { font-size: 0.68rem; color: var(--foreground); text-align: center; line-height: 1.1; pointer-events: none; }
+.plot-tooltip {
+  position: absolute; bottom: 108%; left: 50%; transform: translateX(-50%);
+  white-space: nowrap; background: var(--popover, var(--card)); color: var(--foreground);
+  border: 1px solid var(--border); border-radius: 8px; padding: 6px 10px; font-size: 0.72rem;
+  box-shadow: var(--shadow-hover, 0 8px 24px rgb(0 0 0 / 0.25)); z-index: 3;
+}
+
+/* 风险传导 */
+.flow-canvas { padding: 18px; }
+.flow-titles { display: grid; grid-template-columns: repeat(3, 1fr); gap: 7.2%; margin-bottom: 12px; }
+.flow-body { position: relative; }
+.flow-svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+.flow-link { fill: none; stroke: color-mix(in oklab, var(--foreground) 28%, transparent); transition: opacity .2s; vector-effect: non-scaling-stroke; }
+.flow-link-high { stroke-width: 3; stroke: color-mix(in oklab, var(--destructive, oklch(0.6 0.2 25)) 55%, transparent); }
+.flow-link-low { stroke-width: 1.5; stroke-dasharray: 4 4; }
+.flow-columns { position: relative; display: grid; grid-template-columns: repeat(3, 1fr); gap: 7.2%; }
+.flow-column { display: grid; grid-template-rows: repeat(3, 74px); gap: 26px; }
+.flow-column-title { font-size: 0.74rem; letter-spacing: .1em; color: var(--muted-foreground); text-transform: uppercase; }
+.flow-node {
+  text-align: left; border: 1px solid var(--border); border-radius: 12px; padding: 12px 14px;
+  background: color-mix(in oklab, var(--card) 92%, var(--foreground) 3%); cursor: pointer;
+  display: flex; flex-direction: column; gap: 4px; transition: transform .16s ease, border-color .2s, opacity .2s;
+}
+.flow-node strong { font-size: 0.86rem; color: var(--foreground); }
+.flow-node small { font-size: 0.72rem; color: var(--muted-foreground); }
+.flow-node:hover, .flow-node-active { transform: translateY(-2px); border-color: var(--primary); }
+.flow-node-source { border-left: 3px solid oklch(0.62 0.13 245); }
+.flow-node-channel { border-left: 3px solid oklch(0.66 0.15 300); }
+.flow-node-impact { border-left: 3px solid var(--primary); }
+
+/* 视图切换 */
+.view-switch { display: inline-flex; gap: 4px; padding: 4px; border: 1px solid var(--border); border-radius: 10px; background: var(--card); }
+.view-switch button { padding: 6px 12px; border-radius: 7px; font-size: 0.8rem; color: var(--muted-foreground); cursor: pointer; }
+.view-switch button:hover { color: var(--foreground); }
+.view-switch .view-switch-active { background: color-mix(in oklab, var(--primary) 18%, transparent); color: var(--foreground); }
+
+@media (max-width: 780px) {
+  .flow-columns { grid-template-columns: 1fr; }
+  .flow-svg { display: none; }
+  .plot-area { height: 300px; }
+}
