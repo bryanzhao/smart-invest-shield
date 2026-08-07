@@ -220,23 +220,31 @@ function RiskIntelligenceApp() {
           <button className="icon-button mobile-close" aria-label="关闭导航" onClick={() => setMobileNavOpen(false)}><X size={17} /></button>
         </div>
 
-        <div className="sidebar-section-label">工作台</div>
         <nav className="main-nav" aria-label="主导航">
-          {navItems.map((item) => {
-            const Icon = item.icon;
-            return (
-              <button
-                key={item.id}
-                className={`nav-item ${activeTab === item.id ? "nav-item-active" : ""}`}
-                onClick={() => { setActiveTab(item.id); setMobileNavOpen(false); }}
-              >
-                <Icon size={17} strokeWidth={1.8} />
-                <span>{item.label}</span>
-                {item.badge ? <span className="nav-badge">{item.badge}</span> : null}
-              </button>
-            );
-          })}
+          {navGroups.map((group) => (
+            <div className="nav-group" key={group.group}>
+              <div className="nav-group-head">
+                <span className="nav-group-label">{group.group}</span>
+                <span className="nav-group-hint">{group.hint}</span>
+              </div>
+              {group.items.map((item) => {
+                const Icon = item.icon;
+                return (
+                  <button
+                    key={item.id}
+                    className={`nav-item ${activeTab === item.id ? "nav-item-active" : ""}`}
+                    onClick={() => { setActiveTab(item.id); setMobileNavOpen(false); }}
+                  >
+                    <Icon size={17} strokeWidth={1.8} />
+                    <span>{item.label}</span>
+                    {item.badge ? <span className="nav-badge">{item.badge}</span> : null}
+                  </button>
+                );
+              })}
+            </div>
+          ))}
         </nav>
+
 
         <div className="sidebar-section-label sidebar-section-label-spaced">项目空间</div>
         <div className="space-list">
