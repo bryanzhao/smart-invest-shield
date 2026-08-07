@@ -32,8 +32,10 @@ import {
   UserRound,
   UsersRound,
   X,
+  Compass,
 } from "lucide-react";
 import { CasebookView } from "@/components/casebook";
+import { MarketEntryView } from "@/components/market-entry";
 import { EntityProfilesView } from "@/components/entity-profiles";
 import { RiskLensView } from "@/components/risk-lens";
 import { IntelSupplyView } from "@/components/intel-supply";
@@ -59,7 +61,7 @@ export const Route = createFileRoute("/")({
   component: RiskIntelligenceApp,
 });
 
-type Tab = "overview" | "baseline" | "policy" | "actors" | "entities" | "framework" | "casebook" | "intel" | "lens" | "risk" | "issues";
+type Tab = "overview" | "baseline" | "policy" | "actors" | "entities" | "framework" | "casebook" | "intel" | "entry" | "lens" | "risk" | "issues";
 type RiskLevel = "high" | "medium" | "low";
 
 const countries = [
@@ -175,6 +177,8 @@ const navGroups: Array<{
       { id: "framework", label: "分析框架", icon: Layers3 },
       { id: "casebook", label: "风险案例库", icon: BookMarked, badge: "8" },
       { id: "intel", label: "情报补给", icon: Radio, badge: "5" },
+      { id: "entry", label: "进入策略", icon: Compass, badge: "4" },
+
     ],
   },
   {
@@ -199,6 +203,7 @@ const pageIntros: Record<Tab, { layer: string; description: string }> = {
   framework: { layer: "分析框架", description: "事实 → 结构 → 判断 → 行动：每一层的输入、方法与产出都可追溯。" },
   casebook: { layer: "分析框架", description: "同类国家、同类行业、同类主体的历史风险案例，用可比经验校准判断。" },
   intel: { layer: "分析框架", description: "开源情报打底、客户自有情报校准、开源不可闭合的部分转为闭源与人力情报采购需求。" },
+  entry: { layer: "分析框架", description: "进入门票、三级决策链、自身家底与进入模式矩阵：把认知收敛为可执行的落子顺序。" },
   lens: { layer: "风险与决策", description: "七个风险维度的分析链：输入画像、推演路径、反证信号与预警阈值。" },
   risk: { layer: "风险与决策", description: "只有经过框架推演并绑定证据的结论，才会进入风险清单。" },
   issues: { layer: "风险与决策", description: "把决策层的新问题转成可追踪、可复核、可沉淀的研究交付。" },
@@ -333,6 +338,7 @@ function RiskIntelligenceApp() {
           {activeTab === "framework" ? <FrameworkView /> : null}
           {activeTab === "casebook" ? <CasebookView /> : null}
           {activeTab === "intel" ? <IntelSupplyView /> : null}
+          {activeTab === "entry" ? <MarketEntryView /> : null}
           {activeTab === "risk" ? <RiskView onOpenIssue={() => setIssueOpen(true)} /> : null}
           {activeTab === "policy" ? <PolicyView /> : null}
           {activeTab === "actors" ? <ActorsView /> : null}
