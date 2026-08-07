@@ -153,7 +153,7 @@ const relationTypes = [
 
 export const entityTypeNav = entityTypes.map((item) => ({ id: item.id, name: item.name, icon: item.icon }));
 
-export function EntityProfilesView({ typeId, onTypeChange }: { typeId?: string; onTypeChange?: (id: string) => void } = {}) {
+export function EntityProfilesView({ typeId, onTypeChange }: { typeId?: string | undefined; onTypeChange?: ((id: string) => void) | undefined } = {}) {
   const [internal, setInternal] = useState(entityTypes[0]!.id);
   const active = typeId ?? internal;
   const setActive = (id: string) => { setInternal(id); onTypeChange?.(id); };
