@@ -161,6 +161,7 @@ const navGroups: Array<{
       { id: "baseline", label: "市场基本盘", icon: BookOpen },
       { id: "policy", label: "制度与流程", icon: FileSearch },
       { id: "actors", label: "主体档案", icon: Network },
+      { id: "entities", label: "实体画像", icon: Boxes, badge: "6" },
     ],
   },
   {
@@ -175,6 +176,7 @@ const navGroups: Array<{
     group: "风险与决策",
     hint: "判断层 · 需人工复核",
     items: [
+      { id: "lens", label: "七维风险透镜", icon: Telescope, badge: "7" },
       { id: "risk", label: "风险清单", icon: ShieldCheck, badge: "10" },
       { id: "issues", label: "Issue 中心", icon: GitPullRequest, badge: "3" },
     ],
