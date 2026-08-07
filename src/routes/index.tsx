@@ -281,7 +281,7 @@ function RiskIntelligenceApp() {
                     <span>{item.label}</span>
                     {item.badge ? <span className="nav-badge">{item.badge}</span> : null}
                   </button>
-                  {item.id === "entities" && activeTab === "entities" ? (
+                  {item.id === "entities" ? (
                     <div className="nav-subnav">
                       {entityTypeNav.map((sub) => {
                         const SubIcon = sub.icon;
