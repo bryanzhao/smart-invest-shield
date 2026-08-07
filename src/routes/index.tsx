@@ -27,6 +27,7 @@ import {
   SlidersHorizontal,
   Sparkles,
   Target,
+  Telescope,
   UserRound,
   UsersRound,
   X,
