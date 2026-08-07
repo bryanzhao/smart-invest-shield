@@ -22,6 +22,7 @@ import {
   Network,
   Plus,
   Radar,
+  Radio,
   Search,
   ShieldCheck,
   SlidersHorizontal,
@@ -35,6 +36,7 @@ import {
 import { CasebookView } from "@/components/casebook";
 import { EntityProfilesView } from "@/components/entity-profiles";
 import { RiskLensView } from "@/components/risk-lens";
+import { IntelSupplyView } from "@/components/intel-supply";
 import { ActorNetworkGraph, CompetitorMatrix, RiskTransmissionFlow } from "@/components/relationship-graphs";
 
 export const Route = createFileRoute("/")({
@@ -57,7 +59,7 @@ export const Route = createFileRoute("/")({
   component: RiskIntelligenceApp,
 });
 
-type Tab = "overview" | "baseline" | "policy" | "actors" | "entities" | "framework" | "casebook" | "lens" | "risk" | "issues";
+type Tab = "overview" | "baseline" | "policy" | "actors" | "entities" | "framework" | "casebook" | "intel" | "lens" | "risk" | "issues";
 type RiskLevel = "high" | "medium" | "low";
 
 const countries = [
@@ -172,6 +174,7 @@ const navGroups: Array<{
     items: [
       { id: "framework", label: "分析框架", icon: Layers3 },
       { id: "casebook", label: "风险案例库", icon: BookMarked, badge: "8" },
+      { id: "intel", label: "情报补给", icon: Radio, badge: "5" },
     ],
   },
   {
@@ -195,6 +198,7 @@ const pageIntros: Record<Tab, { layer: string; description: string }> = {
   entities: { layer: "基本认知", description: "六类实体按标准模板画像：属性、来源分级与信息缺口一并呈现。" },
   framework: { layer: "分析框架", description: "事实 → 结构 → 判断 → 行动：每一层的输入、方法与产出都可追溯。" },
   casebook: { layer: "分析框架", description: "同类国家、同类行业、同类主体的历史风险案例，用可比经验校准判断。" },
+  intel: { layer: "分析框架", description: "开源情报打底、客户自有情报校准、开源不可闭合的部分转为闭源与人力情报采购需求。" },
   lens: { layer: "风险与决策", description: "七个风险维度的分析链：输入画像、推演路径、反证信号与预警阈值。" },
   risk: { layer: "风险与决策", description: "只有经过框架推演并绑定证据的结论，才会进入风险清单。" },
   issues: { layer: "风险与决策", description: "把决策层的新问题转成可追踪、可复核、可沉淀的研究交付。" },
@@ -328,6 +332,7 @@ function RiskIntelligenceApp() {
           {activeTab === "lens" ? <RiskLensView /> : null}
           {activeTab === "framework" ? <FrameworkView /> : null}
           {activeTab === "casebook" ? <CasebookView /> : null}
+          {activeTab === "intel" ? <IntelSupplyView /> : null}
           {activeTab === "risk" ? <RiskView onOpenIssue={() => setIssueOpen(true)} /> : null}
           {activeTab === "policy" ? <PolicyView /> : null}
           {activeTab === "actors" ? <ActorsView /> : null}
